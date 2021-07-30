@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const db = require('../models');
 const Users = db.users;
 
-
 const addUser = async (req, res) => {
 
     // let data = await Users.build({firstname:'test', lastname:'avcs', email:'test123@gmail.com', password:'12fee3', phone_no:'246879783', age:'21'});
@@ -14,7 +13,7 @@ const addUser = async (req, res) => {
     const user = await Users.findOne({ where: { email: req.body.email } });
     if (user) {
         // already exit
-        return res.status(200).json({ message: "Email already exist!", status: 0, code: 400 })
+        return res.status(200).json({ message: "Email already exist!", status: 0, code: 400 });
     }
     const data = await Users.create(req.body);
     // console.log(data.dataValues);
