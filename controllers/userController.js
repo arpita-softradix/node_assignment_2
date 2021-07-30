@@ -14,7 +14,7 @@ const addUser = async (req, res) => {
     const user = await Users.findOne({ where: { email: req.body.email } });
     if (user) {
         // already exit
-        return res.status(200).json({ message: "Email already exist!", status: 0, code: 400, data: user.dataValues })
+        return res.status(200).json({ message: "Email already exist!", status: 0, code: 400 })
     }
     const data = await Users.create(req.body);
     // console.log(data.dataValues);
