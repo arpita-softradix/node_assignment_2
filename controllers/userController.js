@@ -28,15 +28,15 @@ const loginUser = async (req, res) => {
     const user = await Users.findOne({ where: { email: req.body.email } });
     if (!user) {
         // invalid email
-        return res.status(200).json({ message: "Invalid email id!", status: 0, code: 401 })
+        return res.status(200).json({ message: "Invalid user!", status: 0, code: 401 })
     }
     // password validation
     const passwordValidation = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordValidation) {
-        return res.status(200).json({ message: "Invalid Password!", status: 0, code: 401 });
+        return res.status(200).json({ message: "Invalid email or password!", status: 0, code: 401 });
     }
     // jwt token
-    const jwtToken = jwt.sign({ password: user.password }, 'secret');
+    const jwtToken = jwt.sign({ email: user.email }, 'secret');
 
     delete user.dataValues['password'];
     user.dataValues["token"] = jwtToken;
