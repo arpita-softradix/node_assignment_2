@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 const db = require('../models');
 const Users = db.users;
 
@@ -15,11 +17,33 @@ const addUser = async (req, res) => {
         return res.status(200).json({ message: "Email already exist!", status: 0, code: 400, data: user.dataValues })
     }
     const data = await Users.create(req.body);
-    console.log(data.dataValues);
-
+    // console.log(data.dataValues);
+    delete data.dataValues['password'];
     res.status(200).json({ message: "Registration successfull", status: 1, code: 200, data: data.dataValues });
 }
 
+const loginUser = async (req, res) => {
+    console.log("login user");
+
+    const user = await Users.findOne({ where: { email: req.body.email } });
+    if (!user) {
+        // invalid email
+        return res.status(200).json({ message: "Invalid email id!", status: 0, code: 401 })
+    }
+    // password validation
+    const passwordValidation = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordValidation) {
+        return res.status(200).json({ message: "Invalid Password!", status: 0, code: 401 });
+    }
+    // jwt token
+    const jwtToken = jwt.sign({ password: user.password }, 'secret');
+
+    delete user.dataValues['password'];
+    user.dataValues["token"] = jwtToken;
+    res.status(200).json({ message: "Login successfull", status: 1, code: 200, data: user.dataValues });
+}
+
 module.exports = {
-    addUser
+    addUser,
+    loginUser
 }
