@@ -35,14 +35,27 @@ const loginUser = async (req, res) => {
         return res.status(200).json({ message: "Invalid email or password!", status: 0, code: 401 });
     }
     // jwt token
-    const jwtToken = jwt.sign({ email: user.email }, 'secret');
+    const jwtToken = jwt.sign({ email: user.email }, 'secret', {expiresIn: '10m'});
 
     delete user.dataValues['password'];
     user.dataValues["token"] = jwtToken;
     res.status(200).json({ message: "Login successfull", status: 1, code: 200, data: user.dataValues });
 }
 
+const userList = async (req, res) => {
+    const user = await Users.findOne({where: {email : req.user.email}});
+    if (!user) {
+        // not authorized
+        return res.status(200).json({message: "User not authorized!", status: 0, code: 401});
+    }
+    // user list
+    const data = await Users.findAll({attributes: {exclude: ['password']}});
+
+    res.status(200).json({message: "List of users", status: 1, code: 200, data: data});
+}
+
 module.exports = {
     addUser,
-    loginUser
+    loginUser,
+    userList
 }
