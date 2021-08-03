@@ -24,9 +24,9 @@ app.use(bodyParser.json())
 
 app.post('/add', userCtrl.addUser);
 
-app.get('/login', userCtrl.loginUser);
+app.post('/login', userCtrl.loginUser);
 
-app.get('/user_list', user_authenticate, userCtrl.userList);
+app.post('/user_list', user_authenticate, userCtrl.userList);
 
 
 app.listen(port, () => {
