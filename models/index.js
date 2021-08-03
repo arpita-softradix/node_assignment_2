@@ -21,9 +21,13 @@ db.sequelize = sequelize;
 db.users = require('./users')(sequelize,DataTypes);
 db.user_rolls = require('./user_rolls')(sequelize,DataTypes);
 
-db.sequelize.sync({force:true,match:/arpita$/})
+// db.users.hasOne(db.user_rolls);
+//db.user_rolls.belongsTo(db.users), {foreignKey:"user_id"};
+
+db.sequelize.sync({force:false,match:/arpita$/})
 .then( () => {
     console.log("yes re-sync");
-})
+});
+
 
 module.exports = db;

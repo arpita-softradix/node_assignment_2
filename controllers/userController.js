@@ -10,21 +10,21 @@ const addUser = async (req,res)=>{
     let transaction;
     try{
         transaction = await db.sequelize.transaction();
-        const data = await Users.create(req.body, {transaction});
-        await User_rolls.create(req.body, {transaction});
-
-        
+        const user_data = req.body;
+        const data = await Users.create(user_data, {transaction});
+        //console.log("id : ", data.id);
+        user_data["user_id"] = data.id;         // add last inserted id of user, to insert it in user_rolls table
+        await User_rolls.create(user_data,{transaction});
         await transaction.commit();
-        return res.status(200).json({status:1,message:'Success',data})
-
+        return res.status(200).json({status:1,code:200,message:'User added successfully!',data:user_data});
     }catch(e){
         if(transaction){
             await transaction.rollback();
         }
-        return res.status(500).json({status:0,message:e.message})
+        return res.status(200).json({status:0,code:500,message:e.message})
     }
 }
-//res.status(200).json({ message: "Registration successfull", status: 1, code: 200, data: data.dataValues });
+
 module.exports = {
     addUser
 }

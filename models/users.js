@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt");
 
+// create table for users
 module.exports = (sequelize, DataTypes) => {
-    const Users = sequelize.define("user", {
+    const Users = sequelize.define("users", {
         firstname: DataTypes.STRING,
         lastname: DataTypes.STRING,
         email: {
