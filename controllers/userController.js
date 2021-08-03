@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
         return res.status(200).json({ message: "Invalid email or password!", status: 0, code: 401 });
     }
     // jwt token
-    const jwtToken = jwt.sign({ email: user.email }, 'secret', {expiresIn: '10m'});
+    const jwtToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '20m' });
 
     delete user.dataValues['password'];
     user.dataValues["token"] = jwtToken;
@@ -43,19 +43,22 @@ const loginUser = async (req, res) => {
 }
 
 const userList = async (req, res) => {
-    const user = await Users.findOne({where: {email : req.user.email}});
-    if (!user) {
-        // not authorized
-        return res.status(200).json({message: "User not authorized!", status: 0, code: 401});
-    }
     // user list
-    const data = await Users.findAll({attributes: {exclude: ['password']}});
+    const user_lists = await Users.findAll({ attributes: { exclude: ['password'] } });
 
-    res.status(200).json({message: "List of users", status: 1, code: 200, data: data});
+    res.status(200).json({ message: "List of users", status: 1, code: 200, data: user_lists });
+}
+
+const getUserById = async (req, res) => {
+    // const user_id = req.params.id;
+    const user = await Users.findOne({ attributes: { exclude: ['password'] }, where: { id: req.params.id } });
+
+    res.status(200).json({ message: "User details", status: 1, code: 200, data: user });
 }
 
 module.exports = {
     addUser,
     loginUser,
-    userList
+    userList,
+    getUserById
 }

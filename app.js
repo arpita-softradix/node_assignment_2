@@ -28,6 +28,8 @@ app.post('/login', userCtrl.loginUser);
 
 app.post('/user_list', user_authenticate, userCtrl.userList);
 
+app.get('/get_user_byId/:id', user_authenticate, userCtrl.getUserById);
+
 
 app.listen(port, () => {
     console.log(`App is listening at http://localhost:${port}`);
