@@ -13,7 +13,7 @@ const user_authenticate = require('./middlewares/auth');
 
 // cors
 app.use(cors({
-    origin: '*'
+    origin: '*',
 }));
 
 // parse application/x-www-form-urlencoded
@@ -26,9 +26,11 @@ app.post('/add', userCtrl.addUser);
 
 app.post('/login', userCtrl.loginUser);
 
-app.post('/user_list', user_authenticate, userCtrl.userList);
+app.get('/user_list', user_authenticate, userCtrl.getUserList);
 
 app.get('/get_user_byId/:id', user_authenticate, userCtrl.getUserById);
+
+app.get('/user_list/pagination', userCtrl.pagination)
 
 
 app.listen(port, () => {
