@@ -54,6 +54,24 @@ const getUserById = async (req, res) => {
     res.status(200).json({ message: "User details", status: 1, code: 200, data: user });
 }
 
+//----  update user by id  ---
+const updateUserById = async (req, res) => {
+
+    Users.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    }).then(function (users) {
+        res.status(200).json({ message: "Update successfull", status: 1, code: 200, data: req.body });
+        console.log(users);
+    })
+        .catch(err => {
+            return res.status(200).json({ status: 0, code: 400, message: err.message });
+        }
+        );
+
+}
+
 //----  user list pagination  ----
 const pagination = async (req, res) => {
     const page = parseInt(req.query.page);
@@ -66,7 +84,7 @@ const pagination = async (req, res) => {
     const totalPages = Math.ceil(data.count / limit);
     console.log("offset : ", offset);
     const currentPageSize = data.rows.length;
-    
+
     res.status(200).json({ message: "User details", status: 1, code: 200, data: data });
 
 }
@@ -76,5 +94,6 @@ module.exports = {
     loginUser,
     getUserList,
     getUserById,
+    updateUserById,
     pagination
 }

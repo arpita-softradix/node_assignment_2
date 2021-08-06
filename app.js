@@ -30,6 +30,8 @@ app.get('/user_list', user_authenticate, userCtrl.getUserList);
 
 app.get('/get_user_byId/:id', user_authenticate, userCtrl.getUserById);
 
+app.put('/update_user_byId/:id', userCtrl.updateUserById);
+
 app.get('/user_list/pagination', userCtrl.pagination)
 
 

@@ -20,7 +20,7 @@ db.sequelize = sequelize;
 
 db.users = require('./users')(sequelize,DataTypes);
 
-db.sequelize.sync({force:true,match:/node_assignment_2$/})
+db.sequelize.sync({force:false,match:/node_assignment_2$/})
 .then( () => {
     console.log("yes re-sync");
 })
