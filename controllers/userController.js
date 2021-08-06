@@ -69,6 +69,21 @@ const updateUserById = async (req, res) => {
             return res.status(200).json({ status: 0, code: 400, message: err.message });
         }
         );
+}
+
+//----  delete user by id  ----
+const deleteUserById = async (req, res) => {
+
+    Users.destroy({
+        where: { id: req.params.id }
+    }).then(function () {
+        console.log('user deleted successfully!!!');
+        res.status(200).json({ message: "user deleted successfully !!", status: 1, code: 200 });
+    })
+    .catch(err => {
+        return res.status(200).json({ status: 0, code: 400, message: err.message });
+    }
+    );
 
 }
 
@@ -95,5 +110,6 @@ module.exports = {
     getUserList,
     getUserById,
     updateUserById,
+    deleteUserById,
     pagination
 }
