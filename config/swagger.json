@@ -1,0 +1,151 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Trender Alert Api's.",
+        "version": "1.0.3",
+        "title": "Trender Alert"
+    },
+    "host": "localhost:3025",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "user",
+            "description": "Trender_Alert_Api's"
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "We are using this API for create new user  in the system",
+                "description": "Api for create new user",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "type": "object",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "firstname": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "lastname": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "role_id": {
+                                    "type": "Number",
+                                    "example": 1    
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/otp-verification":{
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "We are using this API for Verrify Otp",
+                "description": "Api for verify Otp",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "type": "object",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "otp": {
+                                    "type": "Number",
+                                    "example": 2    
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/resend-otp":{
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "We are using this API for Resend Otp",
+                "description": "Api for resend Otp",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "type": "object",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "example": ""
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "We are using this API for login existing tipper or service provider",
+                "description": "Api for login home owner",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "type": "object",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": ""
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    }
+}
+        
